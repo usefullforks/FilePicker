@@ -160,6 +160,10 @@ class FileLoaderCallback implements LoaderManager.LoaderCallbacks<Cursor> {
                 }
                 long duration = data.getLong(data.getColumnIndex(DURATION));
                 if (configs.isSkipHiddenFiles()) {
+                    if (adjustedType == MediaFile.TYPE_VIDEO && duration == 0) {
+                        // 视频文件在隐藏后的时长一般会为0
+                        continue;
+                    }
                     if (path.contains("/.")) {
                         // 父文件夹包含隐藏属性
                         continue;
